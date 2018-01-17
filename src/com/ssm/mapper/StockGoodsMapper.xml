@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.mapper.StockGoodsMapper" >
+  <resultMap id="BaseResultMap" type="com.ssm.po.StockGoods" >
+    <id column="stock_id" property="stockId" jdbcType="VARCHAR" />
+    <id column="good_id" property="goodId" jdbcType="VARCHAR" />
+    <result column="good_num" property="goodNum" jdbcType="INTEGER" />
+    <result column="good_price" property="goodPrice" jdbcType="REAL" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    stock_id, good_id, good_num, good_price
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ssm.po.StockGoodsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from stock_goods
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.ssm.po.StockGoodsKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from stock_goods
+    where stock_id = #{stockId,jdbcType=VARCHAR}
+      and good_id = #{goodId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.ssm.po.StockGoodsKey" >
+    delete from stock_goods
+    where stock_id = #{stockId,jdbcType=VARCHAR}
+      and good_id = #{goodId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ssm.po.StockGoodsExample" >
+    delete from stock_goods
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ssm.po.StockGoods" >
+    insert into stock_goods (stock_id, good_id, good_num, 
+      good_price)
+    values (#{stockId,jdbcType=VARCHAR}, #{goodId,jdbcType=VARCHAR}, #{goodNum,jdbcType=INTEGER}, 
+      #{goodPrice,jdbcType=REAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ssm.po.StockGoods" >
+    insert into stock_goods
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="stockId != null" >
+        stock_id,
+      </if>
+      <if test="goodId != null" >
+        good_id,
+      </if>
+      <if test="goodNum != null" >
+        good_num,
+      </if>
+      <if test="goodPrice != null" >
+        good_price,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="stockId != null" >
+        #{stockId,jdbcType=VARCHAR},
+      </if>
+      <if test="goodId != null" >
+        #{goodId,jdbcType=VARCHAR},
+      </if>
+      <if test="goodNum != null" >
+        #{goodNum,jdbcType=INTEGER},
+      </if>
+      <if test="goodPrice != null" >
+        #{goodPrice,jdbcType=REAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ssm.po.StockGoodsExample" resultType="java.lang.Integer" >
+    select count(*) from stock_goods
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update stock_goods
+    <set >
+      <if test="record.stockId != null" >
+        stock_id = #{record.stockId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodId != null" >
+        good_id = #{record.goodId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodNum != null" >
+        good_num = #{record.goodNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.goodPrice != null" >
+        good_price = #{record.goodPrice,jdbcType=REAL},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update stock_goods
+    set stock_id = #{record.stockId,jdbcType=VARCHAR},
+      good_id = #{record.goodId,jdbcType=VARCHAR},
+      good_num = #{record.goodNum,jdbcType=INTEGER},
+      good_price = #{record.goodPrice,jdbcType=REAL}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ssm.po.StockGoods" >
+    update stock_goods
+    <set >
+      <if test="goodNum != null" >
+        good_num = #{goodNum,jdbcType=INTEGER},
+      </if>
+      <if test="goodPrice != null" >
+        good_price = #{goodPrice,jdbcType=REAL},
+      </if>
+    </set>
+    where stock_id = #{stockId,jdbcType=VARCHAR}
+      and good_id = #{goodId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ssm.po.StockGoods" >
+    update stock_goods
+    set good_num = #{goodNum,jdbcType=INTEGER},
+      good_price = #{goodPrice,jdbcType=REAL}
+    where stock_id = #{stockId,jdbcType=VARCHAR}
+      and good_id = #{goodId,jdbcType=VARCHAR}
+  </update>
+</mapper>

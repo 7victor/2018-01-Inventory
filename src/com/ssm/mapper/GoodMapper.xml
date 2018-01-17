@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.mapper.GoodMapper" >
+  <resultMap id="BaseResultMap" type="com.ssm.po.Good" >
+    <id column="good_id" property="goodId" jdbcType="VARCHAR" />
+    <result column="good_name" property="goodName" jdbcType="VARCHAR" />
+    <result column="good_type" property="goodType" jdbcType="VARCHAR" />
+    <result column="good_price" property="goodPrice" jdbcType="REAL" />
+    <result column="good_flag" property="goodFlag" jdbcType="VARCHAR" />
+    <result column="good_num" property="goodNum" jdbcType="INTEGER" />
+    <result column="good_last_time" property="goodLastTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    good_id, good_name, good_type, good_price, good_flag, good_num, good_last_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ssm.po.GoodExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from good
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from good
+    where good_id = #{goodId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from good
+    where good_id = #{goodId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ssm.po.GoodExample" >
+    delete from good
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ssm.po.Good" >
+    insert into good (good_id, good_name, good_type, 
+      good_price, good_flag, good_num, 
+      good_last_time)
+    values (#{goodId,jdbcType=VARCHAR}, #{goodName,jdbcType=VARCHAR}, #{goodType,jdbcType=VARCHAR}, 
+      #{goodPrice,jdbcType=REAL}, #{goodFlag,jdbcType=VARCHAR}, #{goodNum,jdbcType=INTEGER}, 
+      #{goodLastTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ssm.po.Good" >
+    insert into good
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="goodId != null" >
+        good_id,
+      </if>
+      <if test="goodName != null" >
+        good_name,
+      </if>
+      <if test="goodType != null" >
+        good_type,
+      </if>
+      <if test="goodPrice != null" >
+        good_price,
+      </if>
+      <if test="goodFlag != null" >
+        good_flag,
+      </if>
+      <if test="goodNum != null" >
+        good_num,
+      </if>
+      <if test="goodLastTime != null" >
+        good_last_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="goodId != null" >
+        #{goodId,jdbcType=VARCHAR},
+      </if>
+      <if test="goodName != null" >
+        #{goodName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodType != null" >
+        #{goodType,jdbcType=VARCHAR},
+      </if>
+      <if test="goodPrice != null" >
+        #{goodPrice,jdbcType=REAL},
+      </if>
+      <if test="goodFlag != null" >
+        #{goodFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="goodNum != null" >
+        #{goodNum,jdbcType=INTEGER},
+      </if>
+      <if test="goodLastTime != null" >
+        #{goodLastTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ssm.po.GoodExample" resultType="java.lang.Integer" >
+    select count(*) from good
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update good
+    <set >
+      <if test="record.goodId != null" >
+        good_id = #{record.goodId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodName != null" >
+        good_name = #{record.goodName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodType != null" >
+        good_type = #{record.goodType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodPrice != null" >
+        good_price = #{record.goodPrice,jdbcType=REAL},
+      </if>
+      <if test="record.goodFlag != null" >
+        good_flag = #{record.goodFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodNum != null" >
+        good_num = #{record.goodNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.goodLastTime != null" >
+        good_last_time = #{record.goodLastTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update good
+    set good_id = #{record.goodId,jdbcType=VARCHAR},
+      good_name = #{record.goodName,jdbcType=VARCHAR},
+      good_type = #{record.goodType,jdbcType=VARCHAR},
+      good_price = #{record.goodPrice,jdbcType=REAL},
+      good_flag = #{record.goodFlag,jdbcType=VARCHAR},
+      good_num = #{record.goodNum,jdbcType=INTEGER},
+      good_last_time = #{record.goodLastTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ssm.po.Good" >
+    update good
+    <set >
+      <if test="goodName != null" >
+        good_name = #{goodName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodType != null" >
+        good_type = #{goodType,jdbcType=VARCHAR},
+      </if>
+      <if test="goodPrice != null" >
+        good_price = #{goodPrice,jdbcType=REAL},
+      </if>
+      <if test="goodFlag != null" >
+        good_flag = #{goodFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="goodNum != null" >
+        good_num = #{goodNum,jdbcType=INTEGER},
+      </if>
+      <if test="goodLastTime != null" >
+        good_last_time = #{goodLastTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where good_id = #{goodId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ssm.po.Good" >
+    update good
+    set good_name = #{goodName,jdbcType=VARCHAR},
+      good_type = #{goodType,jdbcType=VARCHAR},
+      good_price = #{goodPrice,jdbcType=REAL},
+      good_flag = #{goodFlag,jdbcType=VARCHAR},
+      good_num = #{goodNum,jdbcType=INTEGER},
+      good_last_time = #{goodLastTime,jdbcType=TIMESTAMP}
+    where good_id = #{goodId,jdbcType=VARCHAR}
+  </update>
+</mapper>
