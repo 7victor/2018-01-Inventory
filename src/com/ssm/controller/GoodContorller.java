@@ -13,7 +13,11 @@ import com.ssm.po.Good;
 import com.ssm.po.GoodType;
 import com.ssm.service.GoodService;
 import com.ssm.service.GoodTypeService;
-
+/**
+ * 商品控制器
+ * @author Administrator
+ *
+ */
 @Controller
 public class GoodContorller {
 	@Autowired
