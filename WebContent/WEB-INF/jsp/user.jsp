@@ -182,7 +182,7 @@
 														<div class="tpl-table-black-operation">
 															<a onclick="agree('${user.userStatus}','${user.userId }')"> <i class="am-icon-pencil"></i>
 																通过审核
-															</a> <a onclick="doDel(${user.userId })"
+															</a> <a onclick="doDel('${user.userId }')"
 																class="tpl-table-black-operation-del"> <i
 																class="am-icon-trash"></i> 删除
 															</a>
